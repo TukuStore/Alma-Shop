@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+# AlmaShop 🛍️
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A premium e-commerce mobile application built with **React Native (Expo)**, featuring a "Heritage Modernity" design aesthetic inspired by Indonesian fabrics.
 
-## Get started
+## 🚀 Tech Stack
 
-1. Install dependencies
+- **Framework**: [Expo Router](https://docs.expo.dev/router/introduction/) (React Native)
+- **Styling**: [NativeWind](https://www.nativewind.dev/) (Tailwind CSS)
+- **Backend**: [Supabase](https://supabase.com/) (PostgreSQL, Auth, Storage)
+- **State Management**: [Zustand](https://docs.pmnd.rs/zustand/getting-started/introduction)
+- **Fonts**: Playfair Display (Headings) & Inter (Body)
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Setup & Installation
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+### 1. Install Dependencies
 ```bash
-npm run reset-project
+npm install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Environment Setup
+Create a `.env` file in the root directory:
+```env
+EXPO_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
 
-## Learn more
+### 3. Backend Setup (Supabase)
+This project uses Supabase for the database. You need to apply the SQL migrations to your project.
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Go to your [Supabase Dashboard](https://supabase.com/dashboard).
+2. Open the **SQL Editor**.
+3. Copy and run the contents of `supabase/migrations/001_initial_schema.sql` to set up tables and RLS policies.
+4. Copy and run `supabase/migrations/002_fix_rls_recursion.sql` to fix a known RLS issue.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 4. Run the App
+```bash
+npx expo start
+```
+- Press `w` for Web.
+- Press `a` for Android (requires Emulator or connected device).
+- Press `i` for iOS (requires Simulator or Mac).
 
-## Join the community
+## 📂 Project Structure
 
-Join our community of developers creating universal apps.
+```
+d:/ALMA/
+├── app/                 # Expo Router pages
+│   ├── (auth)/          # Login/Register
+│   ├── (tabs)/          # Main tabs (Home, Cart, Profile)
+│   ├── product/         # Product details
+│   ├── checkout/        # Checkout flow
+│   └── order/           # Order history
+├── components/          # Reusable UI components
+├── constants/           # Theme tokens (colors, fonts)
+├── lib/                 # Supabase client & utilities
+├── store/               # Zustand state management
+├── services/            # API service layers
+└── supabase/migrations/ # SQL schema files
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## ✨ Key Features
+
+- **Heritage Modernity UI**: Custom colors (Deep Brown `#4E342E`, Gold `#D4AF37`) and typography.
+- **Full Shopping Flow**: Browse -> Search -> Product Detail -> Cart -> Checkout -> Order History.
+- **Real-time Data**: Products, Categories, and Orders managed via Supabase.
+- **Persistent Cart**: Cart items saved locally.
+- **Search**: Debounced product search with filtering.
+
+## 🧪 Testing
+
+To verify your Supabase connection:
+```bash
+node scripts/test-supabase.js
+```
