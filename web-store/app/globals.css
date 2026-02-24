@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─── Alma Shop Design System Tokens ────────────────────── */
+@theme inline {
+  /* shadcn semantic colors (mapped to CSS variables) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Radius tokens */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  /* ─── Alma Brand Colors ─────────────────────────────── */
+  --color-alma-primary: #FF6B57;
+  --color-alma-primary-light: #FF8A7A;
+  --color-alma-accent: #121926;
+  --color-alma-info: #0076F5;
+  --color-alma-success: #00D79E;
+  --color-alma-error: #FF3E38;
+  --color-alma-warning: #FFB13B;
+
+  /* ─── Neutral Palette (Figma) ───────────────────────── */
+  --color-neutral-25: #FCFCFD;
+  --color-neutral-50: #F8FAFC;
+  --color-neutral-100: #EEF2F6;
+  --color-neutral-200: #E3E8EF;
+  --color-neutral-300: #CDD5DF;
+  --color-neutral-400: #9AA4B2;
+  --color-neutral-500: #697586;
+  --color-neutral-600: #4B5565;
+  --color-neutral-700: #364152;
+  --color-neutral-800: #202939;
+  --color-neutral-900: #121926;
+
+  /* ─── Font Families ─────────────────────────────────── */
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+
+  /* ─── Shadow Tokens (Figma) ─────────────────────────── */
+  --shadow-xs: 0 1px 2px rgba(28, 32, 43, 0.06);
+  --shadow-sm: 0 1px 2px rgba(28, 32, 43, 0.04), 0 1px 3px rgba(28, 32, 43, 0.05);
+  --shadow-md: 0 4px 8px -1px rgba(28, 32, 43, 0.02), 0 5px 10px -2px rgba(28, 32, 43, 0.04);
+  --shadow-lg: 0 4px 6px -2px rgba(28, 32, 43, 0.03), 0 12px 16px -4px rgba(28, 32, 43, 0.08);
+  --shadow-xl: 0 24px 48px -12px rgba(28, 32, 43, 0.12);
+}
+
+/* ─── Light Theme (Default) ─────────────────────────────── */
+:root {
+  --radius: 0.625rem;
+  --background: #FFFFFF;
+  --foreground: #121926;
+  --card: #FFFFFF;
+  --card-foreground: #121926;
+  --popover: #FFFFFF;
+  --popover-foreground: #121926;
+  --primary: #FF6B57;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8FAFC;
+  --secondary-foreground: #121926;
+  --muted: #F8FAFC;
+  --muted-foreground: #697586;
+  --accent: #EEF2F6;
+  --accent-foreground: #121926;
+  --destructive: #FF3E38;
+  --border: #E3E8EF;
+  --input: #E3E8EF;
+  --ring: #FF6B57;
+}
+
+/* ─── Dark Theme ────────────────────────────────────────── */
+.dark {
+  --background: #121926;
+  --foreground: #F8FAFC;
+  --card: #202939;
+  --card-foreground: #F8FAFC;
+  --popover: #202939;
+  --popover-foreground: #F8FAFC;
+  --primary: #FF6B57;
+  --primary-foreground: #FFFFFF;
+  --secondary: #202939;
+  --secondary-foreground: #F8FAFC;
+  --muted: #202939;
+  --muted-foreground: #9AA4B2;
+  --accent: #364152;
+  --accent-foreground: #F8FAFC;
+  --destructive: #FF3E38;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #FF6B57;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

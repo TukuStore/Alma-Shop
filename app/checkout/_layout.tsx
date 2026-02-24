@@ -1,0 +1,9 @@
+import { Stack } from 'expo-router';
+
+export default function CheckoutLayout() {
+    return (
+        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#FAF8F5' } }}>
+            <Stack.Screen name="index" />
+        </Stack>
+    );
+}

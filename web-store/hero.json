@@ -1,0 +1,14 @@
+[
+  {
+    "id": "e0e5638f-8f5d-48c1-80e8-61516c029f7c",
+    "image_url": "https://fhkzfwebhcyxhrnojwra.supabase.co/storage/v1/object/public/hero-images/banners/1771641295726_mcjyj.webp",
+    "title": "SMK NU Ungaran",
+    "is_active": true
+  },
+  {
+    "id": "d080cc88-e01b-4537-8e12-7bef05ad9435",
+    "image_url": "https://fhkzfwebhcyxhrnojwra.supabase.co/storage/v1/object/public/hero-images/banners/1771703671577_b0gpw.jpeg",
+    "title": "ghuii",
+    "is_active": true
+  }
+]

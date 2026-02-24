@@ -15,14 +15,14 @@
  */
 
 import DashboardSkeleton from '@/components/dashboard/DashboardSkeleton';
+import FlashDealCard from '@/components/product/FlashDealCard';
+import MostPopularCard from '@/components/product/MostPopularCard';
 import RecentlyViewedCard from '@/components/product/RecentlyViewedCard';
+import SpecialForYouCard from '@/components/product/SpecialForYouCard';
 import { getCategoryImage } from '@/constants/category-images';
 import { useTranslation } from '@/constants/i18n';
-import { getProductImages } from '@/constants/local-images';
 import { Colors } from '@/constants/theme';
-import { formatPrice } from '@/lib/currency';
 import {
-  fetchBestSellers,
   fetchCategories,
   fetchFlashDeals,
   fetchHeroSliders,
@@ -189,239 +189,7 @@ const CategoryItem = memo(({
 
 
 
-// ─── Flash Deal / Best Seller Product Card ─────────
-const FlashDealCard = memo(({
-  item,
-  soldBarColor,
-  soldBarBg,
-}: {
-  item: Product;
-  soldBarColor: string;
-  soldBarBg: string;
-}) => {
-  const sold = item.sold_count || 0;
-  const total = item.total_stock_for_deal || 100;
-  const soldPercentage = Math.min((sold / total) * 100, 100);
-  const images = getProductImages(item.name, item.images || []);
-  const imageSource = images.length > 0 ? images[0] : null;
-  const { t } = useTranslation();
 
-  return (
-    <TouchableOpacity
-      className="w-[150px]"
-      activeOpacity={0.8}
-      onPress={() => router.push({ pathname: '/product/[id]', params: { id: item.id } })}
-    >
-      {/* Image */}
-      <View
-        className="w-[150px] h-[160px] rounded-[20px] overflow-hidden items-center justify-center bg-neutral-50 border border-neutral-100"
-      >
-        {imageSource ? (
-          <Image
-            source={typeof imageSource === 'string' ? { uri: imageSource } : imageSource}
-            style={{ width: '100%', height: '100%' }}
-            contentFit="cover"
-            transition={200}
-          />
-        ) : (
-          <Ionicons name="image-outline" size={40} color={Colors.neutral[300]} />
-        )}
-        {/* Wishlist */}
-        <TouchableOpacity
-          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full items-center justify-center border border-white/20"
-          style={{ backgroundColor: 'rgba(255,255,255,0.85)' }}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="heart-outline" size={16} color={Colors.neutral[800]} />
-        </TouchableOpacity>
-      </View>
-
-      <View className="px-1">
-        {/* Product name */}
-        <Text
-          className="mt-3 text-sm text-neutral-800 font-inter-semibold"
-          style={{ lineHeight: 20 }}
-          numberOfLines={2}
-        >
-          {item.name}
-        </Text>
-
-        {/* Price + Star */}
-        <View className="flex-row items-end justify-between mt-2">
-          <View className="gap-0.5 flex-1">
-            {item.original_price && item.original_price > item.price && (
-              <Text
-                className="text-[11px] text-neutral-400 line-through font-inter-medium"
-                style={{ lineHeight: 14 }}
-              >
-                {formatPrice(item.original_price)}
-              </Text>
-            )}
-            <Text
-              className="text-base text-primary font-inter-bold"
-              style={{ lineHeight: 22 }}
-            >
-              {formatPrice(item.price)}
-            </Text>
-          </View>
-          <View className="flex-row items-center gap-1 pb-0.5">
-            <Ionicons name="star" size={14} color="#FFB13B" />
-            <Text className="text-[11px] text-neutral-600 font-inter-semibold" style={{ lineHeight: 14 }}>
-              {item.rating?.toFixed(1) || '4.5'}
-            </Text>
-          </View>
-        </View>
-
-        {/* Sold Progress */}
-        <View className="mt-3 gap-1.5">
-          <View className="flex-row justify-between items-center">
-            <Text className="text-[10px] text-primary font-inter-semibold uppercase tracking-wider">
-              {t('sold')}
-            </Text>
-            <Text className="text-[10px] text-neutral-700 font-inter-bold">
-              {sold}/{total}
-            </Text>
-          </View>
-          <View
-            className="h-1.5 w-full rounded-full overflow-hidden"
-            style={{ backgroundColor: soldBarBg }}
-          >
-            <View
-              className="h-full rounded-full"
-              style={{
-                backgroundColor: soldBarColor,
-                width: `${soldPercentage}%`,
-              }}
-            />
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-}, (prev, next) => prev.item.id === next.item.id && prev.soldBarColor === next.soldBarColor && prev.soldBarBg === next.soldBarBg);
-
-// ─── Most Popular Card ─────────────────────────────
-const MostPopularCard = memo(({ item }: { item: Product }) => {
-  const images = getProductImages(item.name, item.images || []);
-  const imageSource = images.length > 0 ? images[0] : null;
-
-  return (
-    <TouchableOpacity
-      className="w-[150px]"
-      activeOpacity={0.8}
-      onPress={() => router.push({ pathname: '/product/[id]', params: { id: item.id } })}
-    >
-      <View
-        className="w-[150px] h-[160px] rounded-[20px] overflow-hidden items-center justify-center bg-neutral-50 border border-neutral-100"
-      >
-        {imageSource ? (
-          <Image
-            source={typeof imageSource === 'string' ? { uri: imageSource } : imageSource}
-            style={{ width: '100%', height: '100%' }}
-            contentFit="cover"
-            transition={200}
-          />
-        ) : (
-          <Ionicons name="image-outline" size={40} color={Colors.neutral[300]} />
-        )}
-        <TouchableOpacity
-          className="absolute top-2.5 right-2.5 w-8 h-8 rounded-full items-center justify-center border border-white/20"
-          style={{ backgroundColor: 'rgba(255,255,255,0.85)' }}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="heart-outline" size={16} color={Colors.neutral[800]} />
-        </TouchableOpacity>
-      </View>
-      <View className="px-1">
-        <Text
-          className="mt-3 text-sm text-neutral-800 font-inter-semibold"
-          style={{ lineHeight: 20 }}
-          numberOfLines={2}
-        >
-          {item.name}
-        </Text>
-        <View className="flex-row items-end justify-between mt-2">
-          <Text
-            className="flex-1 text-base text-primary font-inter-bold"
-            style={{ lineHeight: 22 }}
-          >
-            {formatPrice(item.price)}
-          </Text>
-          <View className="flex-row items-center gap-1 pb-0.5">
-            <Ionicons name="star" size={14} color="#FFB13B" />
-            <Text className="text-[11px] text-neutral-600 font-inter-semibold" style={{ lineHeight: 14 }}>
-              {item.rating?.toFixed(1) || '4.8'}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-}, (prev, next) => prev.item.id === next.item.id);
-
-// ─── Special For You Grid Card ─────────────────────
-const SpecialForYouCard = memo(({ item }: { item: Product }) => {
-  const images = getProductImages(item.name, item.images || []);
-  const imageSource = images.length > 0 ? images[0] : null;
-
-  return (
-    <TouchableOpacity
-      className="flex-1 min-w-0"
-      activeOpacity={0.8}
-      onPress={() => router.push({ pathname: '/product/[id]', params: { id: item.id } })}
-    >
-      <View
-        className="w-full rounded-[20px] overflow-hidden bg-neutral-50 border border-neutral-100"
-        style={{ aspectRatio: 4 / 5 }}
-      >
-        {imageSource ? (
-          <Image
-            source={typeof imageSource === 'string' ? { uri: imageSource } : imageSource}
-            style={{ width: '100%', height: '100%' }}
-            contentFit="cover"
-            transition={200}
-          />
-        ) : (
-          <View className="flex-1 items-center justify-center">
-            <Ionicons name="image-outline" size={40} color={Colors.neutral[300]} />
-          </View>
-        )}
-        <TouchableOpacity
-          className="absolute top-3 right-3 w-8 h-8 rounded-full items-center justify-center border border-white/20"
-          style={{ backgroundColor: 'rgba(255,255,255,0.85)' }}
-          activeOpacity={0.7}
-        >
-          <Ionicons name="heart-outline" size={16} color={Colors.neutral[800]} />
-        </TouchableOpacity>
-      </View>
-      <View className="px-1">
-        <Text
-          className="mt-3 text-sm text-neutral-800 font-inter-semibold"
-          style={{ lineHeight: 20 }}
-          numberOfLines={2}
-        >
-          {item.name}
-        </Text>
-        <View className="flex-row items-end justify-between mt-2">
-          <Text
-            className="flex-1 text-base text-primary font-inter-bold"
-            style={{ lineHeight: 22 }}
-          >
-            {formatPrice(item.price)}
-          </Text>
-          <View className="flex-row items-center gap-1 pb-0.5">
-            <Ionicons name="star" size={14} color="#FFB13B" />
-            <Text className="text-[11px] text-neutral-600 font-inter-semibold" style={{ lineHeight: 14 }}>
-              {item.rating?.toFixed(1) || '4.7'}
-            </Text>
-          </View>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
-}, (prev, next) => prev.item.id === next.item.id);
-
-// RecentlyViewedCard now imported
 
 // ═══════════════════════════════════════════════════════
 // Main Dashboard Screen
@@ -430,7 +198,6 @@ const SpecialForYouCard = memo(({ item }: { item: Product }) => {
 export default function DashboardScreen() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [flashDeals, setFlashDeals] = useState<Product[]>([]);
-  const [bestSellers, setBestSellers] = useState<Product[]>([]);
   const [mostPopular, setMostPopular] = useState<Product[]>([]);
   const [specialForYou, setSpecialForYou] = useState<Product[]>([]);
   const [heroSliders, setHeroSliders] = useState<HeroSlider[]>([]);
@@ -444,10 +211,9 @@ export default function DashboardScreen() {
 
   const loadData = useCallback(async () => {
     try {
-      const [cats, flash, best, popular, special, sliders] = await Promise.all([
+      const [cats, flash, popular, special, sliders] = await Promise.all([
         fetchCategories(),
         fetchFlashDeals(),
-        fetchBestSellers(),
         fetchMostPopular(),
         fetchSpecialForYou(),
         fetchHeroSliders('home'),
@@ -456,7 +222,6 @@ export default function DashboardScreen() {
       console.log('Fetched Categories:', JSON.stringify(cats, null, 2));
       setCategories(cats);
       setFlashDeals(flash);
-      setBestSellers(best);
       setMostPopular(popular);
       setSpecialForYou(special);
       setHeroSliders(sliders);
@@ -483,7 +248,7 @@ export default function DashboardScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white" edges={['top']}>
       <ScrollView
         contentContainerStyle={{ paddingBottom: 100 }}
         refreshControl={
@@ -605,6 +370,52 @@ export default function DashboardScreen() {
         {heroSliders.length > 0 && <BannerCarousel data={heroSliders} />}
 
         {/* ═══════════════════════════════════════════ */}
+        {/* VALUE PROPOSITIONS                          */}
+        {/* ═══════════════════════════════════════════ */}
+        <View className="mt-8 px-6">
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: 12 }}
+          >
+            {[
+              { icon: 'options', title: 'Kualitas Premium', desc: 'Sarung pilihan nomor satu', iconColor: '#F59E0B', bg: '#FEF3C7' },
+              { icon: 'shield-checkmark', title: '100% Asli', desc: 'Garansi produk original', iconColor: '#10B981', bg: '#D1FAE5' },
+              { icon: 'car', title: 'Gratis Ongkir', desc: 'S&K Berlaku seluruh ID', iconColor: '#3B82F6', bg: '#DBEAFE' },
+              { icon: 'star', title: 'Rating Tinggi', desc: 'Dipercaya >10k pembeli', iconColor: '#8B5CF6', bg: '#EDE9FE' },
+            ].map((prop, idx) => (
+              <View
+                key={idx}
+                className="bg-white rounded-[24px] p-4 flex-row items-center gap-3 border border-neutral-100"
+                style={{
+                  width: 200,
+                  elevation: 2,
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.05,
+                  shadowRadius: 10,
+                }}
+              >
+                <View
+                  className="w-10 h-10 rounded-2xl items-center justify-center"
+                  style={{ backgroundColor: prop.bg }}
+                >
+                  <Ionicons name={prop.icon as any} size={20} color={prop.iconColor} />
+                </View>
+                <View className="flex-1">
+                  <Text className="text-sm font-inter-bold text-neutral-900 leading-tight">
+                    {prop.title}
+                  </Text>
+                  <Text className="text-[10px] font-inter-medium text-neutral-500 mt-0.5">
+                    {prop.desc}
+                  </Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* ═══════════════════════════════════════════ */}
         {/* CATEGORIES                                  */}
         {/* ═══════════════════════════════════════════ */}
         <View className="mt-8 px-6">
@@ -694,63 +505,18 @@ export default function DashboardScreen() {
         )}
 
         {/* ═══════════════════════════════════════════ */}
-        {/* BEST SELLER DEALS                           */}
-        {/* ═══════════════════════════════════════════ */}
-        {bestSellers.length > 0 && (
-          <View className="mt-8 px-6">
-            <SectionHeader
-              title={t('best_seller_deals')}
-              badge
-              badgeBg="rgba(255,62,56,0.05)"
-              badgeIconName="flame"
-              badgeIconColor="#FF3E38"
-              badgeTextColor="#FF3E38"
-              onPressSeeAll={() => router.push({ pathname: '/product/section/[type]', params: { type: 'best-sellers' } })}
-            />
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ gap: 20 }}
-            >
-              {bestSellers.map((item) => {
-                let barColor = '#00D79E';
-                let barBg = '#CCF7EC';
-                const sold = item.sold_count || 0;
-                const total = item.total_stock_for_deal || 100;
-                const ratio = sold / total;
-
-                if (ratio >= 0.85) {
-                  barColor = '#FF3E38';
-                  barBg = '#FFD8D7';
-                } else if (ratio >= 0.6) {
-                  barColor = '#FFB13B';
-                  barBg = '#FFF1D8';
-                }
-                return (
-                  <FlashDealCard
-                    key={item.id}
-                    item={item}
-                    soldBarColor={barColor}
-                    soldBarBg={barBg}
-                  />
-                );
-              })}
-            </ScrollView>
-          </View>
-        )}
-
-        {/* ═══════════════════════════════════════════ */}
-        {/* MOST POPULAR                                */}
+        {/* KOLEKSI TERLARIS                            */}
         {/* ═══════════════════════════════════════════ */}
         {mostPopular.length > 0 && (
           <View className="mt-8 px-6">
             <SectionHeader
-              title={t('most_popular')}
+              title="Koleksi Terlaris"
               badge
-              badgeBg="rgba(0,118,245,0.05)"
-              badgeIconName="star"
-              badgeIconColor="#0076F5"
-              badgeTextColor="#0076F5"
+              badgeBg="rgba(245,158,11,0.1)"
+              badgeIconName="medal"
+              badgeIconColor="#F59E0B"
+              badgeTextColor="#F59E0B"
+              badgeText="JAWARA"
               onPressSeeAll={() => router.push({ pathname: '/product/section/[type]', params: { type: 'popular' } })}
             />
             <ScrollView
@@ -766,14 +532,19 @@ export default function DashboardScreen() {
         )}
 
         {/* ═══════════════════════════════════════════ */}
-        {/* SPECIAL FOR YOU                             */}
+        {/* EKSPLORASI SARUNG ALMA                      */}
         {/* ═══════════════════════════════════════════ */}
         {specialForYou.length > 0 && (
           <View className="mt-8 px-6">
-            <SectionHeader
-              title={t('special_for_you')}
-              onPressSeeAll={() => router.push('/product/section/special')}
-            />
+            <View className="items-center mb-6">
+              <View className="bg-blue-50 px-3 py-1 rounded-full mb-3">
+                <Text className="text-[10px] font-inter-black text-blue-600 uppercase tracking-widest">Katalog Lengkap</Text>
+              </View>
+              <Text className="text-2xl font-inter-black text-neutral-900 text-center">Eksplorasi Sarung Alma</Text>
+              <Text className="text-xs font-inter-medium text-neutral-500 text-center mt-2 px-4 leading-relaxed">
+                Pancarkan pesona Nusantara dengan balutan sarung sutera dan batik asli buatan pengrajin lokal terbaik.
+              </Text>
+            </View>
             {/* 2-column grid */}
             {Array.from({ length: Math.ceil(specialForYou.length / 2) }).map((_, rowIdx) => {
               const item1 = specialForYou[rowIdx * 2];
@@ -791,6 +562,51 @@ export default function DashboardScreen() {
             })}
           </View>
         )}
+
+        {/* ═══════════════════════════════════════════ */}
+        {/* ALMA HERITAGE BANNER                        */}
+        {/* ═══════════════════════════════════════════ */}
+        <View className="mt-8 mb-8 px-6">
+          <View className="w-full bg-[#111827] rounded-[32px] overflow-hidden relative" style={{ height: 420 }}>
+            {/* Abstract Glows */}
+            <View className="absolute top-0 right-[-50px] w-48 h-48 rounded-full bg-blue-500/20" />
+            <View className="absolute bottom-[-50px] left-[-50px] w-48 h-48 rounded-full bg-red-500/20" />
+
+            <Image
+              source={{ uri: 'https://images.unsplash.com/photo-1610448777093-6a563fc19572?q=80&w=2000&auto=format&fit=crop' }}
+              style={{ width: '100%', height: '100%', position: 'absolute', opacity: 0.5 }}
+              contentFit="cover"
+              transition={500}
+            />
+            <LinearGradient
+              colors={['transparent', 'rgba(17,24,39,0.8)', '#111827']}
+              locations={[0, 0.6, 1]}
+              style={{ position: 'absolute', width: '100%', height: '100%' }}
+            />
+            <View className="absolute inset-0 p-8 justify-end items-center flex-col">
+              <View className="bg-white/20 px-4 py-2 rounded-full flex-row items-center gap-2 mb-6 border border-white/30">
+                <Ionicons name="sparkles" size={14} color="#FBBF24" />
+                <Text className="text-[10px] font-inter-black text-white tracking-widest uppercase">Alma Heritage</Text>
+              </View>
+              <Text className="text-3xl font-inter-black text-white text-center leading-tight mb-4 shadow-sm shadow-black/50">
+                Pesona Warisan Budaya dalam <Text style={{ color: '#FBBF24' }}>Sehelai Kain</Text>
+              </Text>
+              <Text className="text-sm font-inter-medium text-neutral-300 text-center leading-relaxed pb-6">
+                Setiap helai sarung yang kami tawarkan dibuat dengan ketelitian dan dedikasi tinggi.
+              </Text>
+
+              <TouchableOpacity
+                className="bg-white px-6 py-3.5 rounded-full flex-row items-center gap-2 active:scale-95 transition-transform"
+                onPress={() => router.push('/about')}
+              >
+                <Text className="text-neutral-900 font-inter-bold text-sm">Kenali Cerita Kami</Text>
+                <View className="w-6 h-6 rounded-full bg-neutral-100 items-center justify-center ml-1">
+                  <Ionicons name="arrow-forward" size={14} color="#171717" />
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

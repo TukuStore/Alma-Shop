@@ -28,8 +28,7 @@
         "VIBRATE",
         "POST_NOTIFICATIONS"
       ],
-      "package": "com.alma.store",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.alma.store"
     },
     "plugins": [
       "expo-router",
@@ -52,9 +51,7 @@
           "icon": "./assets/images/icon.png",
           "color": "#FF6B57"
         }
-      ],
-      "@react-native-firebase/app",
-      "@react-native-firebase/messaging"
+      ]
     ],
     "web": {
       "output": "static",

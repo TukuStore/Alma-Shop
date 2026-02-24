@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Sarung Tenun",
+    "image_url": "/assets/images/category/sarung-tenun.png"
+  },
+  {
+    "name": "Sarung Wadimor",
+    "image_url": "/assets/images/category/sarung-wadimor.jpg"
+  },
+  {
+    "name": "Sarung Gajah",
+    "image_url": "/assets/images/category/sarung-gajah.jpg"
+  },
+  {
+    "name": "Sarung Mangga",
+    "image_url": "/assets/images/category/sarung-mangga.jpg"
+  },
+  {
+    "name": "Sarung Hitam",
+    "image_url": "/assets/images/category/sarung-hitam.jpg"
+  },
+  {
+    "name": "Sarung Putih",
+    "image_url": "/assets/images/category/sarung-putih.jpg"
+  },
+  {
+    "name": "Sarung Motif",
+    "image_url": "/assets/images/category/sarung-motif.jpg"
+  },
+  {
+    "name": "Sarung Atlas",
+    "image_url": "https://fhkzfwebhcyxhrnojwra.supabase.co/storage/v1/object/public/product-images/categories/27ec2b03-9286-4d7d-8c4e-b2a6bdaac54a.png"
+  }
+]
