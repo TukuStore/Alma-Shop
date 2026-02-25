@@ -42,3 +42,27 @@ app-example
 # generated native folders
 /ios
 /android
+
+# Java heap dumps
+*.hprof
+
+# Build/debug logs & reports
+ts_errors.log
+tsc_output.txt
+web-store/build_error.log
+web-store/build_log.txt
+web-store/eslint.json
+web-store/eslint_cmd.json
+web-store/eslint_log.txt
+web-store/lighthouse-report.html
+web-store/lint_log.txt
+web-store/tsc_log.txt
+
+# Misc
+memory/
+docs/
+.claude/
+.idea/
+.agent/
+*.json.bak
+google-services.json
