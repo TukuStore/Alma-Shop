@@ -8,9 +8,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
-  base: '/',
+  base: '/admin/',
   build: {
-    outDir: 'dist',
+    outDir: '../web-store/public/admin',
     emptyOutDir: true,
   }
 })

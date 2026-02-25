@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build:admin": "cd ../admin-web && npm install --include=dev && npm run build",
-    "build": "next build",
+    "build:admin": "npm --prefix ../admin-web install --include=dev && npm --prefix ../admin-web run build",
+    "build": "npm run build:admin && next build",
     "start": "next start",
     "lint": "eslint"
   },
