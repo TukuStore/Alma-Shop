@@ -8,9 +8,9 @@ export default defineConfig({
     tailwindcss(),
     react(),
   ],
-  base: process.env.VERCEL ? '/' : '/admin/',
+  base: '/',
   build: {
-    outDir: process.env.VERCEL ? 'dist' : '../web-store/public/admin',
+    outDir: 'dist',
     emptyOutDir: true,
   }
 })
