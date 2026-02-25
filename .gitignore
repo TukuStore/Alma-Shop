@@ -66,3 +66,4 @@ docs/
 .agent/
 *.json.bak
 google-services.json
+*.apk
