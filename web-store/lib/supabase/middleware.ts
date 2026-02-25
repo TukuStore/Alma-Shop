@@ -2,13 +2,21 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    // Fail-open on missing env so deployment does not crash with 500.
+    if (!supabaseUrl || !supabaseAnonKey) {
+        return NextResponse.next({ request });
+    }
+
     let supabaseResponse = NextResponse.next({
         request,
     });
 
     const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        supabaseUrl,
+        supabaseAnonKey,
         {
             cookies: {
                 getAll() {
@@ -31,9 +39,16 @@ export async function updateSession(request: NextRequest) {
 
     // IMPORTANT: Do not add logic between createServerClient and supabase.auth.getUser().
     // A simple mistake could make it very hard to debug issues with users being randomly logged out.
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+    let user = null;
+    try {
+        const {
+            data: { user: authUser },
+        } = await supabase.auth.getUser();
+        user = authUser;
+    } catch {
+        // Fail-open to avoid middleware invocation failures on transient auth/network errors.
+        return supabaseResponse;
+    }
 
     // Protected routes — redirect unauthenticated users to login
     const protectedPaths = ["/checkout", "/orders", "/profile", "/wishlist"];
