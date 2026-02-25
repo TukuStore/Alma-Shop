@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build:admin": "cd ../admin-web && npm install --include=dev && npm run build",
-    "build": "npm run build:admin && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
